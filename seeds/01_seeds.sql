@@ -9,7 +9,7 @@ VALUES
 ('Jip Pan', '55842343@q.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
 ('Jade Stone', 'Jade@stone.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
 
-INSERT INTO properties (owner_id, title, description, thumbnail_photo_url, cover_photo_url, cost_per_night, parking_sapces, number_of_bathrooms, number_of_bedrooms, country, street, city, province, post_cost, activ) 
+INSERT INTO properties (owner_id, title, description, thumbnail_photo_url, cover_photo_url, cost_per_night, parking_sapces, number_of_bathrooms, number_of_bedrooms, country, street, city, province, post_cost, active) 
 VALUES 
 (1, 'Best Place EVA', 'Description', 'https://3rxg9qea18zhtl6s2u8jammft-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/Lyric-New-Orleans-3-Bed-3-Bath-Apartment.jpg', 'https://3rxg9qea18zhtl6s2u8jammft-wpengine.netdna-ssl.com/wp-content/uploads/2019/04/Lyric-New-Orleans-3-Bed-3-Bath-Apartment.jpg', 955, 1, 2, 2, 'Canada', '67 Chestnut', 'Port Renfrew', 'BC','V9F 7F7', true),
 (2, 'Do you like Freedom?', 'Description', 'https://skift.com/wp-content/uploads/2018/10/london-airbnb-living-room-e1539104712815.jpg', 'https://skift.com/wp-content/uploads/2018/10/london-airbnb-living-room-e1539104712815.jpg', 455, 1, 1, 1, 'Meruica', '77 Freedom', 'Port FREEDOM', 'WA','98765', true),
