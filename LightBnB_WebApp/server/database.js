@@ -107,6 +107,7 @@ exports.getAllReservations = getAllReservations;
  * @return {Promise<[{}]>}  A promise to the properties.
  */
 
+ /* EXAMPLE
 const getAllProperties = function(options, limit = 10) {
   return pool.query(`
   SELECT * FROM properties
@@ -114,6 +115,78 @@ const getAllProperties = function(options, limit = 10) {
   `, [limit])
   .then(res => res.rows);
 }
+*/
+
+const getAllProperties = function(options, limit = 10) {
+  const queryParams = [];
+  let prev = false;
+  console.log("options object: ", options)
+
+  let queryString = `
+  SELECT properties.*, avg(property_reviews.rating) as average_rating
+  FROM properties
+  JOIN property_reviews ON properties.id = property_id
+  `;
+
+  if (options.city) {
+    queryParams.push(`%${options.city}%`);
+    queryString += `WHERE city LIKE $${queryParams.length} `
+    prev = true;
+  }
+  console.log("Prev after city: ", prev);
+
+  if (options.owner_id) {
+    queryParams.push(`${options.owner_id}`);
+    queryString += (prev ? `AND ` : `WHERE `) + `owner_id = $${queryParams.length} `
+    prev = true;
+  }
+
+  console.log("Prev after owner_id: ", prev);
+
+  if (options.minimum_price_per_night) {
+    queryParams.push(`${options.minimum_price_per_night}`);
+    queryString += (prev ? `AND ` : `WHERE `) + `properties.cost_per_night > $${queryParams.length} `
+    prev = true;
+  }
+
+  console.log("Prev after min_price: ", prev);
+
+  if (options.maximum_price_per_night) {
+    queryParams.push(`${options.maximum_price_per_night}`);
+    queryString += (prev ? `AND ` : `WHERE `) + `properties.cost_per_night < $${queryParams.length} `
+    prev = true;
+  }
+
+  console.log("Prev after max_price: ", prev);
+
+  if (options.minimum_rating) {
+    queryParams.push(`${options.minimum_rating}`);
+    queryString += (prev ? `AND ` : `WHERE `) + `average_rating > $${queryParams.length} `
+    prev = true;
+  }
+
+
+  queryParams.push(limit);
+  queryString += `
+  GROUP BY properties.id
+  ORDER BY cost_per_night
+  LIMIT $${queryParams.length};
+  `;
+
+  // Check output
+  console.log(queryString, queryParams);
+
+  return pool.query(queryString, queryParams)
+  .then(res => res.rows);
+}
+
+  // city,
+  // owner_id,
+  // minimum_price_per_night,
+  // maximum_price_per_night,
+  // minimum_rating
+
+
 exports.getAllProperties = getAllProperties;
 
 
